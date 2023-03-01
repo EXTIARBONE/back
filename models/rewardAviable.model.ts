@@ -2,11 +2,7 @@ import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
 
 const actionSchema = new Schema({
-    userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-    },
-    amount: {
+    gift: {
         type: Schema.Types.String,
         required: false
     },
@@ -16,16 +12,15 @@ const actionSchema = new Schema({
     },
 
 }, {
-    collection: "reward",
+    collection: "rewardAvailable",
     timestamps: true,
     versionKey: false
 });
 
-export interface ActionProps {
-    userId: string;
-    amount: number;
+export interface RewardAvailableProps {
+    gift: number;
     title: string;
 }
 
-export type ActionDocument = ActionProps & Document;
-export const ActionModel: Model<ActionDocument> = mongoose.model<ActionDocument>("Action", actionSchema);
+export type RewardAvailableDocument = RewardAvailableProps & Document;
+export const ActionModel: Model<RewardAvailableDocument> = mongoose.model<RewardAvailableDocument>("Reward Available", actionSchema);
