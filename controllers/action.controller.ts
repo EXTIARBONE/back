@@ -1,22 +1,27 @@
 import express, {Request, Response, Router} from "express";
 import {CoffeeService} from "../services";
 import {checkUserConnected} from "../middlewares";
-import {RankingService} from "../services/ranking.service";
-import {UserSerializer} from "../utils/UserSerializer";
+import {ActionService} from "../services/action.service";
 
 export class ActionController {
 
-    async getRanking(req: Request, res: Response) {
-        const users = await RankingService.getInstance().getAllUsers();
-        const dtoUsers = UserSerializer.userListToDto(users);
-        res.json(dtoUsers);
+    async getAllActions(req: Request, res: Response) {
+        try {
+            const actions = await ActionService.getInstance().getAll();
+            res.json(actions);
+        }
+        catch (err) {
+            res.status(503).end();
+            return;
+        }
+
     }
 
     buildRoutes(): Router {
         const router = express.Router();
         //router.use();
         router.use(checkUserConnected(""));
-        router.get('/', this.getRanking.bind(this));
+        router.get('/', this.getAllActions.bind(this));
         return router;
     }
 }
