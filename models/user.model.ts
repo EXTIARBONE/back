@@ -1,24 +1,24 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
-
-export const possibleRole: { [status: string]: string; } = {
-    "BigBoss": 'BigBoss',
-    "Admin": 'Admin',
-    "Customer": 'Customer',
-    "Preparator": 'Preparator',
-    "Livreur": 'Livreur'
-}
+import {HistoryModel, HistoryProps} from "./history.model";
 
 export enum Role {
-    BigBoss,
-    Admin,
-    Customer,
-    Preparator,
-    Livreur
+    USER,
+    ADMIN
 }
 
 const userSchema = new Schema({
-    login: {
+    name: {
+        type: Schema.Types.String,
+        required: true,
+        unique: true
+    },
+    surname: {
+        type: Schema.Types.String,
+        required: true,
+        unique: true
+    },
+    mail: {
         type: Schema.Types.String,
         required: true,
         unique: true
@@ -28,16 +28,19 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: Schema.Types.String,
+        type: Role,
         required: true
-    },
-    restaurant: {
-        type: Schema.Types.ObjectId,
-        required: false
     },
     sessions: [{
         type: Schema.Types.ObjectId,
         ref: "Session"
+    }],
+    score:{
+        type: Schema.Types.Number,
+        required: false
+    },
+    historique: [{
+        type: HistoryModel
     }]
 }, {
     collection: "users",
@@ -46,11 +49,15 @@ const userSchema = new Schema({
 });
 
 export interface UserProps {
-    login: string;
-    restaurant: string;
-    role: string;
+    name: string;
+    surname: string;
+    mail: string;
     password: string;
-    sessions: string[] | SessionProps[];
+    role: Role;
+    sessions: string[];
+    score: number;
+    historique: HistoryProps[]
+
 }
 
 export type UserDocument = UserProps & Document;
