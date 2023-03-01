@@ -1,6 +1,6 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CoffeeController} from "./controllers";
+import {AuthController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
 config();
@@ -19,7 +19,9 @@ async function startServer(): Promise<void> {
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
-    app.use('/auth', authController.buildRoutes())
+    app.use('/auth', authController.buildRoutes());
+    const rankingController = new RankingController();
+    app.use('/ranking', authController.buildRoutes())
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);
