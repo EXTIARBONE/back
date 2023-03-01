@@ -1,11 +1,7 @@
 import {config} from "dotenv";
 import express from "express";
-import {AdminController, AuthController, BigBossController, CoffeeController} from "./controllers";
+import {AuthController, CoffeeController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
-import {CustomerController} from "./controllers/customer.controller";
-import {PreparatorController} from "./controllers/preparator.controller";
-import {DeliverController} from "./controllers/deliver.controller";
-
 config();
 
 async function startServer(): Promise<void> {
@@ -23,16 +19,6 @@ async function startServer(): Promise<void> {
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes())
-    const bigbossController = new BigBossController();
-    app.use('/bigboss', bigbossController.buildRoutes())
-    const adminController = new AdminController();
-    app.use('/admin', adminController.buildRoutes())
-    const customerController = new CustomerController;
-    app.use('/customer', customerController.buildRoutes())
-    const preparatorController = new PreparatorController();
-    app.use('/preparator', preparatorController.buildRoutes())
-    const deliverController = new DeliverController();
-    app.use('/deliver', deliverController.buildRoutes())
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);
