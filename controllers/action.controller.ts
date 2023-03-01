@@ -11,7 +11,7 @@ export class ActionController {
             res.json(actions);
         }
         catch (err) {
-            res.status(503).end();
+            res.status(500).end();
             return;
         }
 
