@@ -1,4 +1,4 @@
-import {possibleRole, UserDocument, UserModel, UserProps} from "../models";
+import {Role, UserDocument, UserModel, UserProps} from "../models";
 import {AuthUtils, SecurityUtils} from "../utils";
 import {SessionDocument, SessionModel} from "../models/session.model";
 
@@ -22,9 +22,9 @@ export class AuthService {
         }
         let roleName = "";
         if (await AuthUtils.checkBigBoss()) {
-            roleName = possibleRole["BigBoss"];
+            roleName = Role["BigBoss"];
         } else {
-            roleName = possibleRole["Customer"];
+            roleName = Role["Customer"];
         }
         console.log(roleName);
         const model = new UserModel({
