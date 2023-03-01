@@ -2,6 +2,7 @@ import {config} from "dotenv";
 import express from "express";
 import {AuthController, CoffeeController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
+import cors from "cors"
 config();
 
 async function startServer(): Promise<void> {
@@ -14,7 +15,7 @@ async function startServer(): Promise<void> {
     });
 
     const app = express();
-
+    app.use(cors())
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
