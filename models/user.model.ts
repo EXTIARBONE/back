@@ -1,0 +1,57 @@
+import mongoose, {Document, Model, Schema} from "mongoose";
+import {SessionProps} from "./session.model";
+
+export const possibleRole: { [status: string]: string; } = {
+    "BigBoss": 'BigBoss',
+    "Admin": 'Admin',
+    "Customer": 'Customer',
+    "Preparator": 'Preparator',
+    "Livreur": 'Livreur'
+}
+
+export enum Role {
+    BigBoss,
+    Admin,
+    Customer,
+    Preparator,
+    Livreur
+}
+
+const userSchema = new Schema({
+    login: {
+        type: Schema.Types.String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: Schema.Types.String,
+        required: true
+    },
+    role: {
+        type: Schema.Types.String,
+        required: true
+    },
+    restaurant: {
+        type: Schema.Types.ObjectId,
+        required: false
+    },
+    sessions: [{
+        type: Schema.Types.ObjectId,
+        ref: "Session"
+    }]
+}, {
+    collection: "users",
+    timestamps: true,
+    versionKey: false
+});
+
+export interface UserProps {
+    login: string;
+    restaurant: string;
+    role: string;
+    password: string;
+    sessions: string[] | SessionProps[];
+}
+
+export type UserDocument = UserProps & Document;
+export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("User", userSchema);
