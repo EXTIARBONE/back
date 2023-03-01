@@ -7,9 +7,14 @@ import {UserSerializer} from "../utils/UserSerializer";
 export class RankingController {
 
     async getRanking(req: Request, res: Response) {
-        const users = await RankingService.getInstance().getAllUsers();
-        const dtoUsers = UserSerializer.userListToDto(users);
-        res.json(dtoUsers);
+        try {
+            const users = await RankingService.getInstance().getAllUsers();
+            const dtoUsers = UserSerializer.userListToDto(users);
+            res.json(dtoUsers);
+        }
+        catch (err){
+            res.status(500).end();
+        }
     }
 
     buildRoutes(): Router {
