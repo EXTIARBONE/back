@@ -3,13 +3,14 @@ import {SessionProps} from "./session.model";
 import {HistoryModel, HistoryProps} from "./history.model";
 import {
     ScoreCaboneHistoricDocument,
-    scoreCarboneHistoricProps,
+    scoreCarboneHistoricProps, scoreCarboneHistoricSchema,
     scoreCarboneHistoricSchemaModel
 } from "./historicCarbonScore";
+import {historySchema} from "./history.model";
 
-export enum Role {
-    USER,
-    ADMIN
+export const possibleRole:{[status:string]:string;}={
+    "USER":'USER',
+    "ADMIN": 'ADMIN',
 }
 
 const userSchema = new Schema({
@@ -33,7 +34,7 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: Role,
+        type: Schema.Types.String,
         required: true
     },
     sessions: [{
@@ -45,13 +46,18 @@ const userSchema = new Schema({
         required: false
     },
     historique: [{
-        type: HistoryModel
+        type: historySchema,
+        required: false
+    }],
+    nfc: [{
+     type: Schema.Types.Number,
+     required: false
     }],
     carbonScore: {
         type: Schema.Types.Number
     },
     historicCarbonScore: [{
-        type: scoreCarboneHistoricSchemaModel
+        type: scoreCarboneHistoricSchema
     }]
 }, {
     collection: "users",
@@ -64,14 +70,14 @@ export interface UserProps {
     surname: string;
     mail: string;
     password: string;
-    role: Role;
-    sessions: string[];
+    role: string;
+    sessions: string[] | SessionProps[];
     score: number;
-    historique: HistoryProps[];
+    historique: HistoryProps[]
+    nfc: number[]
     carbonScore: number;
     historicCarbonScore: scoreCarboneHistoricProps[];
-
 }
 
 export type UserDocument = UserProps & Document;
-export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("User", userSchema);
+export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("Users", userSchema, "Users");

@@ -1,14 +1,12 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
-import {SessionProps} from "./session.model";
 
-
-export enum PossibleAction {
-    JOURNEY,
-    MEAL,
-    EVENT
+export const PossibleAction:{[status:string]:string;}={
+    "JOURNEY":'JOURNEY',
+    "MEAL": 'MEAL',
+    "EVENT": 'EVENT'
 }
 
-const actionSchema = new Schema({
+export const actionSchema = new Schema({
     title: {
         type: Schema.Types.String,
         required: true,
@@ -17,12 +15,12 @@ const actionSchema = new Schema({
         type: Schema.Types.String,
         required: false
     },
-    amoutToWin: {
+    amountToWin: {
         type: Schema.Types.Number,
-        required: false,
+        required: true,
     },
     actionType: {
-        type: PossibleAction,
+        type: Schema.Types.String,
         required: true,
     },
 
@@ -36,7 +34,7 @@ export interface ActionProps {
     title: string;
     description: string;
     amountToWin: number;
-    actionType: PossibleAction;
+    actionType: string;
 }
 
 export type ActionDocument = ActionProps & Document;

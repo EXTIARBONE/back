@@ -1,12 +1,17 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CarbonCalcApiController, CoffeeController} from "./controllers";
+import {ActionController, AuthController, CarbonCalcApiController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
+import cors from "cors"
+import {HistoricController} from "./controllers";
+import {RewardController} from "./controllers";
+import {NfcController} from "./controllers";
+import {monthlyTask} from "./monthlyTask/resetC02ScoreMonthly";
 config();
 
 async function startServer(): Promise<void> {
 
-    const m: Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
+    await mongoose.connect(process.env.MONGO_URI as string, {
         auth: {
             username: process.env.MONGO_USER as string,
             password: process.env.MONGO_PASSWORD as string
@@ -14,10 +19,24 @@ async function startServer(): Promise<void> {
     });
 
     const app = express();
-
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
+    app.use('/auth', authController.buildRoutes());
+    const rankingController = new RankingController();
+    app.use('/ranking', rankingController.buildRoutes())
+
+    const historicController = new HistoricController();
+    app.use('/historic', historicController.buildRoutes())
+
+    const rewardController = new RewardController();
+    app.use('/reward', rewardController.buildRoutes())
+
+    const actionController = new ActionController();
+    app.use('/action', actionController.buildRoutes())
+
+    const nfcController = new NfcController();
+    app.use('/nfc', nfcController.buildRoutes())
     app.use('/auth', authController.buildRoutes())
     const carbonController = new CarbonCalcApiController();
     app.use('/carbonScore', carbonController.buildRoutes())
@@ -27,5 +46,5 @@ async function startServer(): Promise<void> {
         console.log("Server listening on port " + process.env.PORT);
     });
 }
-
 startServer().catch(console.error);
+monthlyTask()

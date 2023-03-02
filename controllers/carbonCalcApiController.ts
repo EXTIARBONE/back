@@ -4,8 +4,8 @@ import {checkUserConnected} from "../middlewares";
 import {BilanCarboneFacade} from "../facade/bilanCarboneFacade";
 import {AuthUtils} from "../utils";
 
-export enum frontVehiculeType{
-    dieselCar = "MediumDiselCar",
+export enum frontVehiculeType {
+    dieselCar = "MediumDieselCar",
     hybridCar = "MediumHybridCar",
     vanDiesel = "MediumDieselVan",
     petrolCar = "MediumPetrolCar"
@@ -32,9 +32,12 @@ export class CarbonCalcApiController {
             if(req.headers.authorization){
                 const tmpUser = await AuthUtils.getUserByTokenSession(req.headers.authorization);
                 if(carbonAction.vehicle in frontVehiculeType){
+                    let vehicle = await req.body.vehicle
+                    // @ts-ignore
+                    let transport = frontVehiculeType[vehicle]
                     score = await BilanCarboneFacade.getInstance().getVehicleCarbonScore(tmpUser?._id, {
                         distance: req.body.distance,
-                        vehicle: req.body.vehicle
+                        vehicle: transport
                     })
                 }
                 else {
@@ -43,10 +46,10 @@ export class CarbonCalcApiController {
                         vehicle: req.body.vehicle
                     })
                 }
-                res.json(score)
+                res.json({score:score})
             }
         } catch (err) {
-            res.status(400).end(); // erreur des données utilisateurs
+            res.status(500).end();
             return;
         }
     }

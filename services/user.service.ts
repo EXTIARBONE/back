@@ -1,4 +1,5 @@
 import {UserDocument, UserModel, UserProps} from "../models";
+import {CoffeeDocument, CoffeeModel} from "../models/coffee.model";
 
 export class UserService {
     private static instance?: UserService;
@@ -22,10 +23,18 @@ export class UserService {
         if (!user) {
             return null;
         }
-        if (score !== null) {
-            user.carbonScore+= score;
+        if (score !== null && user.carbonScore !== undefined) {
+            user.carbonScore = user.carbonScore + parseFloat(String(score));
+        }
+        else {
+            user.carbonScore = parseFloat(String(score));
         }
         const res = await user.save();
         return res;
     }
+
+    async getAll(): Promise<UserDocument[]> {
+        return UserModel.find().exec();
+    }
+
 }

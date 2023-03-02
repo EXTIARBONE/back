@@ -1,7 +1,7 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 
 
-const scoreCarboneHistoricSchema = new Schema({
+export const scoreCarboneHistoricSchema = new Schema({
     scpre: {
         type: Schema.Types.Number,
         required: true

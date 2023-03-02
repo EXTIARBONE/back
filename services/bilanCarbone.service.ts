@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import {frontVehiculeType} from "../controllers/carbonCalcApiController";
 export interface vehicleAction{
     distance: number,
-    vehicle: frontVehiculeType
+    vehicle: string
 }
 
 export class BilanCarboneService {
@@ -18,15 +18,13 @@ export class BilanCarboneService {
     private constructor() {
     }
 
-    public personnalVehicleQuery(vehicle: vehicleAction){
+    public async personnalVehicleQuery(vehicle: vehicleAction) {
         const API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiN2ExMTU2MTFlYmJkMjAyMWE1MzA4NWVjNjRjZWE0MDkzNDM2MjE5OTYyMzM2MTNmN2ZlYjQ3ZWU1NDBkOTA3YmVmYzUxM2VlZWMxOTlmMWEiLCJpYXQiOjE2Nzc3NDQyNjEsIm5iZiI6MTY3Nzc0NDI2MSwiZXhwIjoxNzA5MzY2NjYxLCJzdWIiOiIzNjI0Iiwic2NvcGVzIjpbXX0.WYMHVuTTsIvI6Cl33XYo22QTxN70-lMS1EDpLRGcd-vOVUh_jh3WX_mktIWKCy1OCJmd4C05w-Wp6JNUMDZN9w';
 
         const postData = {
             distance: vehicle.distance,
             vehicle: vehicle.vehicle
         };
-
-        let score;
 
         const options: AxiosRequestConfig = {
             method: 'POST',
@@ -37,18 +35,17 @@ export class BilanCarboneService {
             data: postData
         };
 
-        axios(options)
-            .then(response => {
-                score = response.data;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        return score;
-
+        try {
+            const response = await axios(options);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 
-    public publicTransportQuery(vehicle: vehicleAction){
+
+    public async publicTransportQuery(vehicle: vehicleAction) {
         const API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiN2ExMTU2MTFlYmJkMjAyMWE1MzA4NWVjNjRjZWE0MDkzNDM2MjE5OTYyMzM2MTNmN2ZlYjQ3ZWU1NDBkOTA3YmVmYzUxM2VlZWMxOTlmMWEiLCJpYXQiOjE2Nzc3NDQyNjEsIm5iZiI6MTY3Nzc0NDI2MSwiZXhwIjoxNzA5MzY2NjYxLCJzdWIiOiIzNjI0Iiwic2NvcGVzIjpbXX0.WYMHVuTTsIvI6Cl33XYo22QTxN70-lMS1EDpLRGcd-vOVUh_jh3WX_mktIWKCy1OCJmd4C05w-Wp6JNUMDZN9w';
 
         const postData = {
@@ -65,13 +62,12 @@ export class BilanCarboneService {
             data: postData
         };
 
-        axios(options)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
+        try {
+            const response = await axios(options);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 }
