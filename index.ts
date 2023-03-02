@@ -1,6 +1,6 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CoffeeController} from "./controllers";
+import {AuthController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
 import {HistoricController} from "./controllers";
@@ -22,7 +22,9 @@ async function startServer(): Promise<void> {
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
-    app.use('/auth', authController.buildRoutes())
+    app.use('/auth', authController.buildRoutes());
+    const rankingController = new RankingController();
+    app.use('/ranking', rankingController.buildRoutes())
 
     const historicController = new HistoricController();
     app.use('/historic', historicController.buildRoutes())
