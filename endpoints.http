@@ -1,7 +1,18 @@
-### GET All Rewards
-GET http://localhost:3001/reward/getAllRewardsAvailable
+### POST Subscription
+POST https://extiarbone-back.azurewebsites.net/auth/subscribe
 Accept: Content-Type: application/json
 
-### GET Reward by ID
-GET http://localhost:3001/getreward/{{id}}
-Accept: Content-Type: application/json
+{
+"name": "Doe",
+"email": "john.doe@gmail.com",
+"password": "123456",
+"surname": "John",
+}
+
+### POST Login
+POST https://extiarbone-back.azurewebsites.net/auth/login
+
+{
+"mail": "john.doe@gmail.com",
+"password": "123456"
+}

@@ -1,0 +1,36 @@
+### GET All Rewards
+GET http://localhost:3001/reward/getAllRewardsAvailable
+Accept: Content-Type: application/json
+
+### GET Reward by ID
+GET http://localhost:3001/getreward/{{id}}
+Authorization: Bearer {{token}}
+Accept: Content-Type: application/json
+
+### POST Reward
+POST http://localhost:3001/reward/addReward
+Authorization: Bearer {{token}}
+
+{
+ "userId": "5f9b5b9b9b9b9b9b9b9b9b9b",
+ "amount": 100,
+ "title": "Reward 1"
+}
+
+### POST Add reward available
+POST http://localhost:3001/reward/addRewardAvailable
+Authorization: Bearer {{token}}
+
+{
+ "gift": "100",
+ "title": "Reward 1"
+}
+
+### PUT update reward available
+PUT http://localhost:3001/reward/updateRewardAvailable/{{id}}
+Authorization: Bearer {{token}}
+
+{
+ "gift": "100",
+ "title": "Reward 1"
+}
