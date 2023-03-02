@@ -23,7 +23,7 @@ export class HistoricController{
 
             const historic = await HistoricService.getInstance().getHistoric(userId, startDate, endDate)
 
-            if (historic.length === 0){
+            if (!historic || historic.length === 0){
                 res.status(404).json({error: "Aucun historique trouvé"})
                 return
             }

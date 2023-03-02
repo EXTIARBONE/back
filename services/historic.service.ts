@@ -18,7 +18,7 @@ export class HistoricService{
             return UserModel.find({ $and: [
                 {_id: userId},
                     {historique: {$elemMatch: {date: {$gte: startDate, $lte: endDate}}}}
-                ]}).exec()
+                ]}, {historique: 1}).exec()
         }
 
         return UserModel.find({_id: userId}, {historique: 1}).exec()

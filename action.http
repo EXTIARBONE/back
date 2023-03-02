@@ -1,3 +1,47 @@
 ### GET all actions
 GET http://localhost:3001/actions
 Authorization: Bearer {{token}}
+
+### POST add actions available
+POST http://localhost:3001/actions/addActionsAvailable
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+[
+  {
+    "title": "action1",
+    "description": "description1",
+    "amountToWin": 100,
+    "actionType": "your action type"
+  },
+  {
+    "title": "action2",
+    "description": "description2",
+    "amountToWin": 100,
+    "actionType": "aaaaaaa"
+  }
+]
+
+
+### POST add one action to be available
+POST http://localhost:3001/actions/addActionsAvailable
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "action2",
+    "description": "description2",
+    "amountToWin": 100,
+    "actionType": "aaaaaaa"
+}
+
+### POST add one action
+POST http://localhost:3001/actions/addAction
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "userId": "5f9f1b9b9b9b9b9b9b9b9b9b",
+    "actionId": "5f9f1b9b9b9b9b9b9b9b9b9b"
+}
+

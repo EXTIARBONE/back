@@ -1,5 +1,6 @@
-import {CoffeeDocument, CoffeeModel, CoffeeProps} from "../models/coffee.model";
-import {ActionDocument, ActionModel} from "../models/action.model";
+import {ActionDocument, ActionModel, ActionProps} from "../models/action.model";
+import {HistoryModel} from "../models/history.model";
+import {UserModel} from "../models";
 
 export class ActionService {
     private static instance?: ActionService;
@@ -17,4 +18,32 @@ export class ActionService {
     async getAll(): Promise<ActionDocument[]> {
         return ActionModel.find().exec();
     }
+
+    async addActionsAvailable(actions: ActionProps|ActionProps[]): Promise<ActionDocument[]> {
+        return ActionModel.insertMany(actions);
+    }
+
+    async addAction(action: string, userId: string): Promise<boolean> {
+        const historyAction = new HistoryModel({
+            userId: userId,
+            action: action,
+            date: new Date().toISOString()
+        })
+
+        const modified = await UserModel.updateOne({_id: userId}, {$push: {historique: historyAction}});
+        return new Promise((resolve, reject) => {
+            if (modified.modifiedCount === 1) {
+                resolve(true);
+            } else {
+                reject(false);
+            }
+        })
+
+    }
+
+    async deleteAction(id: string) {
+        const deletion = await ActionModel.deleteOne({_id: id});
+        return deletion.deletedCount === 1
+    }
+
 }
