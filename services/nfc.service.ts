@@ -1,4 +1,5 @@
 import {UserModel} from "../models";
+import {CoffeeModel} from "../models/coffee.model";
 
 export class NfcService{
     private static instance: NfcService;

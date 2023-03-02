@@ -1,6 +1,12 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
-import {HistoryModel, HistoryProps, historySchema} from "./history.model";
+import {HistoryModel, HistoryProps} from "./history.model";
+import {
+    ScoreCaboneHistoricDocument,
+    scoreCarboneHistoricProps, scoreCarboneHistoricSchema,
+    scoreCarboneHistoricSchemaModel
+} from "./historicCarbonScore";
+import {historySchema} from "./history.model";
 
 export const possibleRole:{[status:string]:string;}={
     "USER":'USER',
@@ -10,11 +16,13 @@ export const possibleRole:{[status:string]:string;}={
 const userSchema = new Schema({
     name: {
         type: Schema.Types.String,
-        required: true
+        required: true,
+        unique: true
     },
     surname: {
         type: Schema.Types.String,
-        required: true
+        required: true,
+        unique: true
     },
     mail: {
         type: Schema.Types.String,
@@ -26,14 +34,12 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: String,
-        enum: ['USER', "ADMIN"],
+        type: Schema.Types.String,
         required: true
     },
     sessions: [{
         type: Schema.Types.ObjectId,
-        ref: "Session",
-        required: false
+        ref: "Session"
     }],
     score:{
         type: Schema.Types.Number,
@@ -43,9 +49,15 @@ const userSchema = new Schema({
         type: historySchema,
         required: false
     }],
-    nfc: [{
-     type: Schema.Types.Number,
-     required: false
+    nfc: {
+        type: Schema.Types.Array,
+        required: false
+    },
+    carbonScore: {
+        type: Schema.Types.Number
+    },
+    historicCarbonScore: [{
+        type: scoreCarboneHistoricSchema
     }]
 }, {
     collection: "users",
@@ -62,8 +74,9 @@ export interface UserProps {
     sessions: string[] | SessionProps[];
     score: number;
     historique: HistoryProps[]
-    nfc: number[]
+    nfc: {type: Schema.Types.Array}
+    carbonScore: number;
+    historicCarbonScore: scoreCarboneHistoricProps[];
 }
-
 export type UserDocument = UserProps & Document;
 export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("Users", userSchema, "Users");

@@ -39,9 +39,7 @@ export class CoffeeController {
             res.json(coffee);
         } catch (err) {
             res.status(400).end();
-            return;
-        }
-    }
+            return;}}
 
     async deleteCoffee(req: Request, res: Response) {
         try {

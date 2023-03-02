@@ -38,7 +38,7 @@ export class AuthController {
                 token: session?._id
             });
         } catch (err) {
-            res.status(500).end(); // unauthorized
+            res.status(500).json({error: err}); // unauthorized
         }
     }
 

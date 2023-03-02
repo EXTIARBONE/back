@@ -15,9 +15,9 @@ export const actionSchema = new Schema({
         type: Schema.Types.String,
         required: false
     },
-    amoutToWin: {
+    amountToWin: {
         type: Schema.Types.Number,
-        required: false,
+        required: true,
     },
     actionType: {
         type: Schema.Types.String,
