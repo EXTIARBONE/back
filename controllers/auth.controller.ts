@@ -30,11 +30,15 @@ export class AuthController {
                 mail: req.body.mail,
                 password: req.body.password
             }, platform);
+            if (!session) {
+                res.status(401).end(); // unauthorized
+                return;
+            }
             res.json({
                 token: session?._id
             });
         } catch (err) {
-            res.status(401).end(); // unauthorized
+            res.status(500).end(); // unauthorized
         }
     }
 
