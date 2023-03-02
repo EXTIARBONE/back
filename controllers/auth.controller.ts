@@ -1,6 +1,7 @@
 import express, {Request, Response, Router} from "express";
 import {AuthService} from "../services";
 import {checkUserConnected} from "../middlewares";
+import {UserService} from "../services/user.service";
 
 
 export class AuthController {
@@ -34,9 +35,18 @@ export class AuthController {
                 res.status(401).end(); // unauthorized
                 return;
             }
+            let user = await UserService.getInstance().getByIdUser(session.user.toString())
+            console.log("coucou user", user)
             res.json({
-                token: session?._id
+                token: session?._id,
+                name: user?.name,
+                surname: user?.surname,
+                mail: user?.mail,
+                userId: user?._id,
+                score: user?.score,
+                role: user?.role
             });
+
         } catch (err) {
             res.status(500).json({error: err}); // unauthorized
         }
