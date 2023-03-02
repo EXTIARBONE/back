@@ -80,14 +80,6 @@ export class RewardController{
         }
     }
 
-    async updateRewardAvailable(req: Request, res: Response){
-        try{
-
-        }catch (e) {
-            res.status(500).json({error: "Impossible de mettre à jour la récompense"})
-        }
-    }
-
     async updateReward(req: Request, res: Response){
         try{
             if (!req.params.id){
@@ -117,15 +109,15 @@ export class RewardController{
         const router = express.Router()
 
         //Get Routes
-        router.get("/getreward/:id", checkUserConnected(""), this.getReward.bind(this))
+        router.get("/getReward/:id", checkUserConnected(""), this.getReward.bind(this))
         router.get("/getAllRewardsAvailable", this.getAllRewardsAvailable.bind(this))
 
         //Post Routes
-        router.post("/addreward", checkUserConnected(""), this.addReward.bind(this))
-        router.post("/addrewardavailable", checkUserConnected(""), this.addRewardAvailable.bind(this))
+        router.post("/addReward", checkUserConnected(""), this.addReward.bind(this))
+        router.post("/addRewardAvailable", checkUserConnected(""), this.addRewardAvailable.bind(this))
 
         //Put Routes
-        router.put("/updaterewardAvailable", checkUserConnected(""), this.updateReward.bind(this))
+        router.put("/updateRewardAvailable", checkUserConnected(""), this.updateReward.bind(this))
 
         return router
     }

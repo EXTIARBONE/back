@@ -64,10 +64,10 @@ export class HistoricController{
         const router = express.Router()
 
         //get historic
-        router.get("/gethistoric/:id", checkUserConnected(""), this.getHistoric.bind(this))
+        router.get("/getHistoric/:id", checkUserConnected(""), this.getHistoric.bind(this))
 
         //put historic
-        router.put("/puthistoric/:id", checkUserConnected(""),this.updateHistoric.bind(this))
+        router.put("/putHistoric/:id", checkUserConnected(""),this.updateHistoric.bind(this))
 
         return router
 

@@ -42,6 +42,10 @@ const userSchema = new Schema({
     historique: [{
         type: historySchema,
         required: false
+    }],
+    nfc: [{
+     type: Schema.Types.Number,
+     required: false
     }]
 }, {
     collection: "users",
@@ -55,10 +59,10 @@ export interface UserProps {
     mail: string;
     password: string;
     role: string;
-    sessions: string[];
+    sessions: string[] | SessionProps[];
     score: number;
     historique: HistoryProps[]
-
+    nfc: number[]
 }
 export type UserDocument = UserProps & Document;
 export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("user", userSchema);
