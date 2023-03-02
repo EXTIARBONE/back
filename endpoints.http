@@ -1,0 +1,7 @@
+### GET All Rewards
+GET http://localhost:3001/reward/getAllRewardsAvailable
+Accept: Content-Type: application/json
+
+### GET Reward by ID
+GET http://localhost:3001/getreward/{{id}}
+Accept: Content-Type: application/json
