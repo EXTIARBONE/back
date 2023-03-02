@@ -41,6 +41,10 @@ const userSchema = new Schema({
     },
     historique: [{
         type: HistoryModel
+    }],
+    nfc: [{
+     type: Schema.Types.Number,
+     required: false
     }]
 }, {
     collection: "users",
@@ -57,7 +61,7 @@ export interface UserProps {
     sessions: string[];
     score: number;
     historique: HistoryProps[]
-
+    nfc: number[]
 }
 
 export type UserDocument = UserProps & Document;
