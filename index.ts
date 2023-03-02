@@ -1,11 +1,12 @@
 import {config} from "dotenv";
 import express from "express";
-import {ActionController, AuthController, CoffeeController, RankingController} from "./controllers";
+import {ActionController, AuthController, CarbonCalcApiController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
 import {HistoricController} from "./controllers";
 import {RewardController} from "./controllers";
 import {NfcController} from "./controllers";
+import {monthlyTask} from "./monthlyTask/resetC02ScoreMonthly";
 config();
 
 async function startServer(): Promise<void> {
@@ -18,7 +19,6 @@ async function startServer(): Promise<void> {
     });
 
     const app = express();
-    app.use(cors())
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
@@ -37,10 +37,14 @@ async function startServer(): Promise<void> {
 
     const nfcController = new NfcController();
     app.use('/nfc', nfcController.buildRoutes())
+    app.use('/auth', authController.buildRoutes())
+    const carbonController = new CarbonCalcApiController();
+    app.use('/carbonScore', carbonController.buildRoutes())
+
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);
     });
 }
-
 startServer().catch(console.error);
+monthlyTask()

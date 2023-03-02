@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import {UserModel} from "../models";
+import {UserDocument, UserModel} from "../models";
 
 export class AuthUtils {
     public static sha512(str: string): string {
@@ -17,4 +17,14 @@ export class AuthUtils {
         }
         return false;
     }
+
+    static async getUserByTokenSession(reqHeader: string): Promise<UserDocument | null> {
+        let idsession = "";
+        if(reqHeader)
+            idsession = reqHeader.slice(7);
+        return UserModel.findOne({
+            sessions : idsession
+        }).exec();
+    }
+
 }
