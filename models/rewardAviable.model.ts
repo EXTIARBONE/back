@@ -1,7 +1,7 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
 
-const actionSchema = new Schema({
+const rewardAvaiSchema = new Schema({
     gift: {
         type: Schema.Types.String,
         required: false
@@ -23,4 +23,4 @@ export interface RewardAvailableProps {
 }
 
 export type RewardAvailableDocument = RewardAvailableProps & Document;
-export const ActionModel: Model<RewardAvailableDocument> = mongoose.model<RewardAvailableDocument>("Reward Available", actionSchema);
+export const rewardAvaiModel: Model<RewardAvailableDocument> = mongoose.model<RewardAvailableDocument>("Reward Available", rewardAvaiSchema);

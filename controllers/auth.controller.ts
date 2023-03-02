@@ -2,17 +2,24 @@ import express, {Request, Response, Router} from "express";
 import {AuthService} from "../services";
 import {checkUserConnected} from "../middlewares";
 
+
 export class AuthController {
 
     async createUser(req: Request, res: Response) {
         try {
-            const user = await AuthService.getInstance().subscribeUser({
-                login: req.body.login,
-                password: req.body.password
-            });
+            if (!req.body){
+                res.status(400).json({error: "Bad request"})
+                return
+            }
+            console.log(req.body)
+            const user = await AuthService.getInstance().subscribeUser(req.body);
+            if (!user){
+                res.status(501).json({error: "Impossible de créer l'utilisateur"})
+                return
+            }
             res.json(user);
         } catch (err) {
-            res.status(400).end();
+            res.status(500).json({error: err});
         }
     }
 
@@ -20,7 +27,7 @@ export class AuthController {
         const platform = req.headers['user-agent'] || "Unknown";
         try {
             const session = await AuthService.getInstance().logIn({
-                login: req.body.login,
+                mail: req.body.mail,
                 password: req.body.password
             }, platform);
             res.json({
