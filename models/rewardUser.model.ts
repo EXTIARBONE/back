@@ -1,7 +1,7 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
 
-const actionSchema = new Schema({
+const rewardSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -28,4 +28,4 @@ export interface RewardUserProps {
 }
 
 export type RewardUserDocument = RewardUserProps & Document;
-export const ActionModel: Model<RewardUserDocument> = mongoose.model<RewardUserDocument>("Reward", actionSchema);
+export const rewardModel: Model<RewardUserDocument> = mongoose.model<RewardUserDocument>("Reward", rewardSchema);
