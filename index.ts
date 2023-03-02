@@ -3,6 +3,8 @@ import express from "express";
 import {AuthController, CoffeeController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
+import {HistoricController} from "./controllers/historic.controller";
+import {RewardController} from "./controllers/reward.controller";
 config();
 
 async function startServer(): Promise<void> {
@@ -20,6 +22,12 @@ async function startServer(): Promise<void> {
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes())
+
+    const historicController = new HistoricController();
+    app.use('/historic', historicController.buildRoutes())
+
+    const rewardController = new RewardController();
+    app.use('/reward', rewardController.buildRoutes())
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);
