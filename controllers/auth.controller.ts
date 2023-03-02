@@ -27,7 +27,7 @@ export class AuthController {
         const platform = req.headers['user-agent'] || "Unknown";
         try {
             const session = await AuthService.getInstance().logIn({
-                mail: req.body.login,
+                mail: req.body.mail,
                 password: req.body.password
             }, platform);
             res.json({
