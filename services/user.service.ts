@@ -1,5 +1,5 @@
+
 import {UserDocument, UserModel, UserProps} from "../models";
-import {CoffeeDocument, CoffeeModel} from "../models/coffee.model";
 
 export class UserService {
     private static instance?: UserService;
@@ -13,11 +13,13 @@ export class UserService {
 
     private constructor() {
     }
+   /* async getByIdUser(userId: string): Promise<UserDocument| null> {
+        return UserModel.findById(userId).exec();
 
-    async getById(userId: string): Promise<UserDocument | null> {
+    }*/
+    async getByIdUser(userId: string): Promise<UserDocument | null> {
         return UserModel.findById(userId).exec();
     }
-
     async updateCarboneScore(userId: string, score: number): Promise<UserDocument | null> {
         const user = await this.getById(userId);
         if (!user) {
@@ -32,9 +34,10 @@ export class UserService {
         const res = await user.save();
         return res;
     }
-
+    
     async getAll(): Promise<UserDocument[]> {
         return UserModel.find().exec();
     }
+
 
 }
