@@ -60,6 +60,5 @@ export interface UserProps {
     historique: HistoryProps[]
 
 }
-
 export type UserDocument = UserProps & Document;
-export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("Users", userSchema, "Users");
+export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("user", userSchema);

@@ -1,4 +1,5 @@
 import {CoffeeDocument, CoffeeModel, CoffeeProps} from "../models/coffee.model";
+import {UserDocument, UserModel} from "../models";
 
 export class CoffeeService {
     private static instance?: CoffeeService;

@@ -1,4 +1,4 @@
-import {Role, UserDocument, UserModel, UserProps} from "../models";
+import {possibleRole, UserDocument, UserModel, UserProps} from "../models";
 import {AuthUtils, SecurityUtils} from "../utils";
 import {SessionDocument, SessionModel} from "../models/session.model";
 
