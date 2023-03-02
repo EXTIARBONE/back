@@ -1,10 +1,11 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CoffeeController, RankingController} from "./controllers";
+import {ActionController, AuthController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
-import {HistoricController} from "./controllers/historic.controller";
-import {RewardController} from "./controllers/reward.controller";
+import {HistoricController} from "./controllers";
+import {RewardController} from "./controllers";
+import {NfcController} from "./controllers";
 config();
 
 async function startServer(): Promise<void> {
@@ -30,6 +31,12 @@ async function startServer(): Promise<void> {
 
     const rewardController = new RewardController();
     app.use('/reward', rewardController.buildRoutes())
+
+    const actionController = new ActionController();
+    app.use('/action', actionController.buildRoutes())
+
+    const nfcController = new NfcController();
+    app.use('/nfc', nfcController.buildRoutes())
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);
