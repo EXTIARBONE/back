@@ -1,13 +1,15 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CoffeeController} from "./controllers";
+import {AuthController, CoffeeController, RankingController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 import cors from "cors"
+import {HistoricController} from "./controllers/historic.controller";
+import {RewardController} from "./controllers/reward.controller";
 config();
 
 async function startServer(): Promise<void> {
 
-    const m: Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
+    await mongoose.connect(process.env.MONGO_URI as string, {
         auth: {
             username: process.env.MONGO_USER as string,
             password: process.env.MONGO_PASSWORD as string
@@ -19,7 +21,15 @@ async function startServer(): Promise<void> {
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
-    app.use('/auth', authController.buildRoutes())
+    app.use('/auth', authController.buildRoutes());
+    const rankingController = new RankingController();
+    app.use('/ranking', rankingController.buildRoutes())
+
+    const historicController = new HistoricController();
+    app.use('/historic', historicController.buildRoutes())
+
+    const rewardController = new RewardController();
+    app.use('/reward', rewardController.buildRoutes())
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);

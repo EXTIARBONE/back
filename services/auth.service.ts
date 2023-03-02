@@ -16,29 +16,28 @@ export class AuthService {
     private constructor() {
     }
 
-    public async subscribeUser(user: Partial<UserProps>): Promise<UserDocument> {
+    public async subscribeUser(user: UserProps): Promise<UserDocument> {
+        console.log(user)
         if (!user.password) {
             throw new Error('Missing password');
         }
-        let roleName = "";
-        if (await AuthUtils.checkBigBoss()) {
-            roleName = possibleRole["BigBoss"];
-        } else {
-            roleName = possibleRole["Customer"];
-        }
+        let roleName = possibleRole["USER"];
         console.log(roleName);
         const model = new UserModel({
-            login: user.login,
+            mail: user.mail,
+            name: user.name,
+            surname: user.surname,
             password: SecurityUtils.sha512(user.password),
-            role: roleName
+            role: roleName,
+            score: 0
         });
         return model.save();
     }
 
     // Pick selectionne des champs dans le type
-    public async logIn(info: Pick<UserProps, 'login' | 'password'>, platform: string): Promise<SessionDocument | null> {
+    public async logIn(info: Pick<UserProps, 'mail' | 'password'>, platform: string): Promise<SessionDocument | null> {
         const user = await UserModel.findOne({
-            login: info.login,
+            mail: info.mail,
             password: SecurityUtils.sha512(info.password)
         }).exec();
         if (user === null) {
