@@ -14,10 +14,10 @@ export class HistoricService{
 
     async getHistoric(userId: string, startDate: string|undefined, endDate: string|undefined){
 
-        if (startDate && endDate){
+        if (startDate !== undefined && endDate !== undefined){
             return UserModel.find({ $and: [
                 {_id: userId},
-                    {historique: {$elemMatch: {date: {$gte: startDate, $lte: endDate}}}}
+                    {historique: {$elemMatch: {date: {$gte: new Date(startDate).toISOString(), $lte: new Date(endDate).toISOString()}}}}
                 ]}, {historique: 1}).exec()
         }
 

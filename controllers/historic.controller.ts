@@ -7,17 +7,20 @@ export class HistoricController{
 
     async getHistoric(req: Request, res: Response){
         try{
-            let startDate: string|undefined
-            let endDate: string|undefined
-            const userId = req.params.id
+            let startDate: string|undefined = undefined
+            let endDate: string|undefined = undefined
+            const userId: string = req.params.id
 
-            if (userId === null){
+            if (!userId){
                 res.status(400).json({error: "La requête envoyée n'est pas valide"})
                 return
             }
 
-            if (req.query.startDate && req.query.endDate){
+            if (req.query.startDate){
                 startDate = req.query.startDate as string
+            }
+
+            if (req.query.endDate){
                 endDate = req.query.endDate as string
             }
 
@@ -28,7 +31,7 @@ export class HistoricController{
                 return
             }
 
-            return historic
+            res.json(historic)
 
         }catch (e) {
             res.status(500).json({error: "Impossible de récupérer l'historique"})
