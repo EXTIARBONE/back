@@ -58,7 +58,7 @@ export class CarbonCalcApiController {
         const router = express.Router();
         //router.use();
         router.use(checkUserConnected(""));
-        router.post('/', express.json(), this.carbonCalculator.bind(this));
+        router.get('/:id', express.json(), this.carbonCalculator.bind(this));
         return router;
     }
 }

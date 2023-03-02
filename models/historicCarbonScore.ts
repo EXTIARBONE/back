@@ -2,7 +2,7 @@ import mongoose, {Document, Model, Schema} from "mongoose";
 
 
 export const scoreCarboneHistoricSchema = new Schema({
-    scpre: {
+    score: {
         type: Schema.Types.Number,
         required: true
     },

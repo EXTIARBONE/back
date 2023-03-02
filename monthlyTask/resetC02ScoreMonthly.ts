@@ -18,7 +18,7 @@ export const monthlyTask = (): void => {
             }
             tmpUser.historicCarbonScore.push(tmpHisto);
             tmpUser.carbonScore = 0;
-            tmpUser.save();
+            await tmpUser.save();
         }
     });
 }
