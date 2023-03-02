@@ -23,7 +23,7 @@ async function startServer(): Promise<void> {
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes());
     const rankingController = new RankingController();
-    app.use('/ranking', authController.buildRoutes())
+    app.use('/ranking', rankingController.buildRoutes())
 
     const historicController = new HistoricController();
     app.use('/historic', historicController.buildRoutes())

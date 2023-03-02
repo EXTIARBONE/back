@@ -55,7 +55,7 @@ export interface UserProps {
     mail: string;
     password: string;
     role: string;
-    sessions: string[];
+    sessions: string[] | SessionProps[];
     score: number;
     historique: HistoryProps[]
 

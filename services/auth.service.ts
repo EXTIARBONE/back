@@ -1,4 +1,4 @@
-import {Role, UserDocument, UserModel, UserProps} from "../models";
+import {possibleRole, UserDocument, UserModel, UserProps} from "../models";
 import {AuthUtils, SecurityUtils} from "../utils";
 import {SessionDocument, SessionModel} from "../models/session.model";
 
@@ -28,7 +28,8 @@ export class AuthService {
             name: user.name,
             surname: user.surname,
             password: SecurityUtils.sha512(user.password),
-            role: roleName
+            role: roleName,
+            score: 0
         });
         return model.save();
     }
