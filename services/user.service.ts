@@ -21,7 +21,7 @@ export class UserService {
         return UserModel.findById(userId).exec();
     }
     async updateCarboneScore(userId: string, score: number): Promise<UserDocument | null> {
-        const user = await this.getById(userId);
+        const user = await this.getByIdUser(userId);
         if (!user) {
             return null;
         }
