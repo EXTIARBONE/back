@@ -1,22 +1,20 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
-import {HistoryModel, HistoryProps} from "./history.model";
+import {HistoryModel, HistoryProps, historySchema} from "./history.model";
 
-export enum Role {
-    USER,
-    ADMIN
+export const possibleRole:{[status:string]:string;}={
+    "USER":'USER',
+    "ADMIN": 'ADMIN',
 }
 
 const userSchema = new Schema({
     name: {
         type: Schema.Types.String,
-        required: true,
-        unique: true
+        required: true
     },
     surname: {
         type: Schema.Types.String,
-        required: true,
-        unique: true
+        required: true
     },
     mail: {
         type: Schema.Types.String,
@@ -28,19 +26,26 @@ const userSchema = new Schema({
         required: true
     },
     role: {
-        type: Role,
+        type: String,
+        enum: ['USER', "ADMIN"],
         required: true
     },
     sessions: [{
         type: Schema.Types.ObjectId,
-        ref: "Session"
+        ref: "Session",
+        required: false
     }],
     score:{
         type: Schema.Types.Number,
         required: false
     },
     historique: [{
-        type: HistoryModel
+        type: historySchema,
+        required: false
+    }],
+    nfc: [{
+     type: Schema.Types.Number,
+     required: false
     }]
 }, {
     collection: "users",
@@ -53,12 +58,12 @@ export interface UserProps {
     surname: string;
     mail: string;
     password: string;
-    role: Role;
-    sessions: string[];
+    role: string;
+    sessions: string[] | SessionProps[];
     score: number;
     historique: HistoryProps[]
-
+    nfc: number[]
 }
 
 export type UserDocument = UserProps & Document;
-export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("User", userSchema);
+export const UserModel: Model<UserDocument> = mongoose.model<UserDocument>("Users", userSchema, "Users");

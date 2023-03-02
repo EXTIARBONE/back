@@ -1,0 +1,3 @@
+### GET all actions
+GET http://localhost:3001/actions
+Authorization: Bearer {{token}}

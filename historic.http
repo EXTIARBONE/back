@@ -1,0 +1,14 @@
+### GET historic by id user, if no query startdate or endate, all historic will be returned
+GET http://localhost:3001/historic/getHistoric/5f9c1b0b0b9b0c0017b0b0b0?startDate=2020-10-01&endDate=2020-10-31
+Protocol-Query: string
+Authorization: Bearer {{token}}
+
+### PUT update historic
+PUT http://localhost:3001/historic/putHistoric/5f9c1b0b0b9b0c0017b0b0b0
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "action": "update",
+  "date": "2020-10-30T00:00:00.000Z"
+}
