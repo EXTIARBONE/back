@@ -1,4 +1,5 @@
 import {UserModel} from "../models";
+import {HistoryProps} from "../models/history.model";
 
 export class HistoricService{
 
@@ -23,6 +24,12 @@ export class HistoricService{
         return UserModel.find({_id: userId}, {historique: 1}).exec()
 
     }
+
+    async updateHistoric(userId: string, data: HistoryProps){
+        const user = await UserModel.updateOne({_id: userId}, {$push: {historique: data}}).exec()
+        return user.modifiedCount === 1
+    }
+
 
 
 }

@@ -1,6 +1,5 @@
 import express, {Request, Response} from "express";
 import {HistoricService} from "../services/historic.service";
-import {AuthService} from "../services";
 import {checkUserConnected} from "../middlewares";
 
 
@@ -38,7 +37,25 @@ export class HistoricController{
 
 
     async updateHistoric(req: Request, res: Response){
+        try{
+            if (!req.params.id){
+                res.status(400).json({error: "Erreur dans la requête"})
+                return
+            }
+            if (!req.body){
+                res.status(400).json({error: "Un corps est nécessaire pour la requête"})
+                return
+            }
+            const updateHistoricUser = await HistoricService.getInstance().updateHistoric(req.params.id, req.body)
+            if (!updateHistoricUser){
+                res.status(500).json({error: "Erreur serveur, impossible de mettre à jour l'historique de l'utilisateur"})
+                return
+            }
+            res.json({message: "Historique de l'utilisateur mis à jour"})
 
+        }catch (e) {
+            res.status(500).json({error: "Erreur serveur, impossible de mettre à jour l'historique de l'utilisateur"})
+        }
     }
 
 

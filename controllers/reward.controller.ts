@@ -47,8 +47,16 @@ export class RewardController{
     buildRoutes(){
         const router = express.Router()
 
+        //Get Routes
         router.get("/getreward/:id", checkUserConnected(""), this.getReward.bind(this))
         router.get("/getAllRewardsAvailable", this.getAllRewardsAvailable.bind(this))
+
+        //Post Routes
+        router.post("/addreward", checkUserConnected(""), this.getReward.bind(this))
+        router.post("/addrewardavailable", checkUserConnected(""), this.getAllRewardsAvailable.bind(this))
+
+        //Put Routes
+        router.put("/updaterewardAvailable", checkUserConnected(""), this.getReward.bind(this))
 
         return router
     }
