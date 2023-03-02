@@ -13,20 +13,13 @@ function userAcces(role: string, user: UserProps) {
     if (role === "") {
         return true;
     }
-    if (role === "BigBoss" && user.role === "BigBoss") {
+    if (role === "BigBoss" && user.mail === "BigBoss") {
         return true;
-    } else if (role === "Admin" && user.role === "Admin") {
+    } else if (role === "Admin" && user.password === "Admin") {
         return true;
-    } else if (role === "Customer" && user.role === "Customer") {
-        return true;
-    } else if (role === "Preparator" && user.role === "Preparator") {
-        return true;
-    } else if (role === "Livreur" && user.role === "Livreur") {
-        return true;
-    } else {
-        return false;
-    }
 
+
+    }
 }
 
 export function checkUserConnected(role: string): RequestHandler {

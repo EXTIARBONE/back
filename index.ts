@@ -7,7 +7,7 @@ config();
 
 async function startServer(): Promise<void> {
 
-    const m: Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
+    await mongoose.connect(process.env.MONGO_URI as string, {
         auth: {
             username: process.env.MONGO_USER as string,
             password: process.env.MONGO_PASSWORD as string

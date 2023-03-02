@@ -1,20 +1,16 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
-import {ActionProps} from "./action.model";
+import {ActionModel, ActionProps, actionSchema} from "./action.model";
 
-const historySchema = new Schema({
+export const historySchema = new Schema({
     userId:  {
-        Type: Schema.Types.ObjectId,
-        required: true
+        Type: Schema.Types.ObjectId
     },
     action: {
-        type: Schema.Types.Map,
-        required: true,
+        type: actionSchema
     },
     date: {
-        type: Schema.Types.Date,
-        required: true,
-        unique: true
+        type: Schema.Types.Date
     },
 }, {
     collection: "history",
