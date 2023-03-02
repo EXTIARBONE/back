@@ -23,7 +23,7 @@ export class ActionService {
         return ActionModel.insertMany(actions);
     }
 
-    async addAction(action: string, userId: string): Promise<boolean> {
+    async addAction(action: ActionProps, userId: string): Promise<boolean> {
         const historyAction = new HistoryModel({
             userId: userId,
             action: action,
