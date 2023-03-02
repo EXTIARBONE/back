@@ -7,6 +7,7 @@ import {HistoricController} from "./controllers";
 import {RewardController} from "./controllers";
 import {NfcController} from "./controllers";
 import {monthlyTask} from "./monthlyTask/resetC02ScoreMonthly";
+import {UserController} from "./controllers/user.controller";
 config();
 
 async function startServer(): Promise<void> {
@@ -40,6 +41,9 @@ async function startServer(): Promise<void> {
     app.use('/auth', authController.buildRoutes())
     const carbonController = new CarbonCalcApiController();
     app.use('/carbonScore', carbonController.buildRoutes())
+
+    const userController = new UserController();
+    app.use('/user', userController.buildRoutes())
 
 
     app.listen(process.env.PORT, function () {

@@ -6,3 +6,4 @@ export * from './nfc.controller';
 export * from './action.controller';
 export * from './ranking.controller';
 export * from './carbonCalcApiController';
+export * from './user.controller';
