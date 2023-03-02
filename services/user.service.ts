@@ -1,5 +1,6 @@
 
 import {UserDocument, UserModel, UserProps} from "../models";
+import {CoffeeDocument, CoffeeModel} from "../models/coffee.model";
 
 export class UserService {
     private static instance?: UserService;
@@ -20,6 +21,7 @@ export class UserService {
     async getByIdUser(userId: string): Promise<UserDocument | null> {
         return UserModel.findById(userId).exec();
     }
+
     async updateCarboneScore(userId: string, score: number): Promise<UserDocument | null> {
         const user = await this.getByIdUser(userId);
         if (!user) {
