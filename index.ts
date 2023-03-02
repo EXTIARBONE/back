@@ -1,6 +1,6 @@
 import {config} from "dotenv";
 import express from "express";
-import {AuthController, CoffeeController} from "./controllers";
+import {AuthController, CarbonCalcApiController, CoffeeController} from "./controllers";
 import mongoose, {Mongoose} from "mongoose";
 config();
 
@@ -19,6 +19,9 @@ async function startServer(): Promise<void> {
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes())
+    const carbonController = new CarbonCalcApiController();
+    app.use('/carbonScore', carbonController.buildRoutes())
+
 
     app.listen(process.env.PORT, function () {
         console.log("Server listening on port " + process.env.PORT);

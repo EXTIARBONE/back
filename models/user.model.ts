@@ -1,6 +1,11 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
 import {HistoryModel, HistoryProps} from "./history.model";
+import {
+    ScoreCaboneHistoricDocument,
+    scoreCarboneHistoricProps,
+    scoreCarboneHistoricSchemaModel
+} from "./historicCarbonScore";
 
 export enum Role {
     USER,
@@ -41,6 +46,12 @@ const userSchema = new Schema({
     },
     historique: [{
         type: HistoryModel
+    }],
+    carbonScore: {
+        type: Schema.Types.Number
+    },
+    historicCarbonScore: [{
+        type: scoreCarboneHistoricSchemaModel
     }]
 }, {
     collection: "users",
@@ -56,7 +67,9 @@ export interface UserProps {
     role: Role;
     sessions: string[];
     score: number;
-    historique: HistoryProps[]
+    historique: HistoryProps[];
+    carbonScore: number;
+    historicCarbonScore: scoreCarboneHistoricProps[];
 
 }
 
