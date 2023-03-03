@@ -7,7 +7,7 @@ import {HistoricController} from "./controllers";
 import {RewardController} from "./controllers";
 import {NfcController} from "./controllers";
 import {monthlyTask} from "./monthlyTask/resetC02ScoreMonthly";
-import {UserController} from "./controllers/user.controller";
+import {UserController} from "./controllers";
 config();
 
 async function startServer(): Promise<void> {
@@ -19,7 +19,10 @@ async function startServer(): Promise<void> {
         }
     });
 
+
+
     const app = express();
+    app.use(cors())
     const coffeeController = new CoffeeController();
     app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
@@ -38,7 +41,7 @@ async function startServer(): Promise<void> {
 
     const nfcController = new NfcController();
     app.use('/nfc', nfcController.buildRoutes())
-    app.use('/auth', authController.buildRoutes())
+
     const carbonController = new CarbonCalcApiController();
     app.use('/carbonScore', carbonController.buildRoutes())
 

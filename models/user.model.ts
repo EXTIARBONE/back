@@ -53,6 +53,10 @@ const userSchema = new Schema({
         type: Schema.Types.Array,
         required: false
     },
+    photo: {
+        type: Schema.Types.String,
+        required: false
+    },
     carbonScore: {
         type: Schema.Types.Number
     },
@@ -75,6 +79,7 @@ export interface UserProps {
     score: number;
     historique: HistoryProps[]
     nfc: {type: Schema.Types.Array}
+    photo: string;
     carbonScore: number;
     historicCarbonScore: scoreCarboneHistoricProps[];
 }
