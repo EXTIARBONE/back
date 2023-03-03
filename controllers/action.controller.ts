@@ -7,6 +7,10 @@ export class ActionController {
     async getAllActions(req: Request, res: Response) {
         try {
             const actions = await ActionService.getInstance().getAll();
+            if(!actions){
+                res.status(404).json({error: "Aucune action n'a été trouvée"});
+                return;
+            }
             res.json(actions);
         }
         catch (err) {
