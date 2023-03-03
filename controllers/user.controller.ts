@@ -52,7 +52,7 @@ export class UserController {
     async updateUser(req: Request, res:Response){
 
         try{
-            if (!req.params.user_id){
+            if (!req.params.id){
                 res.status(400).json({error: "La requête envoyée n'est pas valide"})
                 return;
             }
@@ -60,7 +60,7 @@ export class UserController {
                 res.status(400).json({error: "La requête envoyée n'est pas valide"})
                 return;
             }
-            const user = await UserService.getInstance().updateUser(req.params.user_id, req.body);
+            const user = await UserService.getInstance().updateUser(req.params.id, req.body);
             if (!user) {
                 res.status(404).json({error: "L'utilisateur n'existe pas"})
                 return;
@@ -141,7 +141,7 @@ export class UserController {
         router.get('/getScore/:user_id', checkUserConnected(""), this.getScoreFromUser.bind(this));
         router.get('/profilPics', checkUserConnected(""), this.getProfilPics.bind(this));
 
-        router.put('/:user_id', express.json(), checkUserConnected(""), this.updateUser.bind(this));
+        router.put('/:id', express.json(), checkUserConnected(""), this.updateUser.bind(this));
         router.put('/nfc/:id', express.json(), this.updateUserByNfc.bind(this))
 
         return router;
