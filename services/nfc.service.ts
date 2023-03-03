@@ -11,7 +11,7 @@ export class NfcService{
         return NfcService.instance;
     }
 
-    async getInfo(nfc: Array<number>) {
-        return UserModel.findOne({nfc: nfc}, {name: 1, surname: 1, score: 1})
+    async getInfo(nfc: string) {
+        return UserModel.findOne({nfc: nfc})
     }
 }

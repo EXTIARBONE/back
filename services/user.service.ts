@@ -58,6 +58,10 @@ export class UserService {
         }
 
         const upload = await container.getBlockBlobClient(userId + enfFileContainer).upload(file, file.length)
+        if (!upload){
+            return null;
+        }
+        return upload._response.request.url
 
 
     }
@@ -116,6 +120,9 @@ export class UserService {
         }
         if (userProps.score !== undefined) {
             user.score = userProps.score;
+        }
+        if(userProps.nfc !== undefined){
+            user.nfc = userProps.nfc;
         }
         return await user.save();
     }

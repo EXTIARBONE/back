@@ -9,11 +9,12 @@ export class NfcController{
                 res.status(400).json({error: "No body"});
                 return;
             }
+            let nfc = req.body.nfc.toString()
             if (!req.body.nfc){
                 res.status(400).json({error: "No nfc"});
                 return;
             }
-            const userNfc = NfcService.getInstance().getInfo(req.body.nfc);
+            const userNfc = await NfcService.getInstance().getInfo(nfc);
             if (!userNfc){
                 res.status(404).json({error: "User not found"});
                 return;
