@@ -80,7 +80,7 @@ export class ActionController {
         router.get('/', this.getAllActions.bind(this));
 
         //Post routes
-        router.post("/addActionsAvailable", this.addActionsAvailable.bind(this));
+        router.post("/addActionsAvailable", express.json(), this.addActionsAvailable.bind(this));
         router.post("/addAction", this.addAction.bind(this));
 
         router.delete("/deleteAction/:id", this.deleteAction.bind(this));
