@@ -29,7 +29,8 @@ export class AuthService {
             surname: user.surname,
             password: SecurityUtils.sha512(user.password),
             role: roleName,
-            score: 0
+            score: 0,
+            carbonScore: 0
         });
         return model.save();
     }
