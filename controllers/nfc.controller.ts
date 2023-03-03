@@ -27,7 +27,7 @@ export class NfcController{
 
     buildRoutes(){
         const router = express.Router();
-        router.post('/getInfo', this.getInfo.bind(this));
+        router.post('/getInfo', express.json(), this.getInfo.bind(this));
         return router
     }
 
