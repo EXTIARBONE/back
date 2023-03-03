@@ -21,7 +21,7 @@ export class AuthController {
             }
             const user = await AuthService.getInstance().subscribeUser(req.body);
             if (!user){
-                res.status(501).json({error: "Impossible de créer l'utilisateur"})
+                res.status(503).json({error: "Impossible de créer l'utilisateur"})
                 return
             }
             res.json(user);
@@ -42,7 +42,6 @@ export class AuthController {
                 return;
             }
             let user = await UserService.getInstance().getByIdUser(session.user.toString())
-            console.log("coucou user", user)
             res.json({
                 token: session?._id,
                 name: user?.name,
@@ -50,7 +49,8 @@ export class AuthController {
                 mail: user?.mail,
                 userId: user?._id,
                 score: user?.score,
-                role: user?.role
+                role: user?.role,
+                carboneScore: user?.carbonScore
             });
 
         } catch (err) {
