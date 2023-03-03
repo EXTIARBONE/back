@@ -54,4 +54,6 @@ async function startServer(): Promise<void> {
     });
 }
 startServer().catch(console.error);
-monthlyTask()
+console.log(process.env.CRON_DELAY as string)
+//monthlyTask()
+
