@@ -54,4 +54,4 @@ async function startServer(): Promise<void> {
     });
 }
 startServer().catch(console.error);
-//monthlyTask()
+monthlyTask()
