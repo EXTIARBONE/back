@@ -36,7 +36,7 @@ export class RewardController{
                 res.status(500).json({error: "Une erreur est survenu lors de l'enregistrement"})
                 return
             }
-            res.json({message: "ok", reward: reward})
+            res.status(201).json({message: "ok", reward: reward})
 
         }catch (e) {
             res.status(500).json({error: "Impossible d'ajouter la récompense disponible"})

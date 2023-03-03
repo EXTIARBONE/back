@@ -126,6 +126,19 @@ export class UserService {
         }
         return await user.save();
     }
+
+    async updateUserByNfc(userId: string, userProps: UserProps) {
+
+        const user = await this.getByIdUser(userId);
+
+        if (!user) {
+            return null;
+        }
+        if (userProps.score !== undefined) {
+            user.score = userProps.score;
+        }
+        return await user.save();
+    }
     
     async getAll(): Promise<UserDocument[]> {
         return UserModel.find().exec();
