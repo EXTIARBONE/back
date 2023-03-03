@@ -19,7 +19,7 @@ export class ActionService {
         return ActionModel.find().exec();
     }
 
-    async addActionsAvailable(actions: ActionProps|ActionProps[]): Promise<ActionDocument[]> {
+    async addActionsAvailable(actions: ActionProps|ActionProps[]) {
         return ActionModel.insertMany(actions);
     }
 

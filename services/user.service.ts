@@ -1,5 +1,12 @@
+import {config} from "dotenv";
+config()
 import {UserDocument, UserModel, UserProps} from "../models";
-import {CoffeeDocument, CoffeeModel} from "../models/coffee.model";
+import {BlobServiceClient} from "@azure/storage-blob";
+
+const blobService = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING as string)
+const container = blobService.getContainerClient('profil-pics')
+let enfFileContainer = "profile-pics"
+let blockBlobExist: string
 
 export class UserService {
     private static instance?: UserService;
@@ -13,10 +20,59 @@ export class UserService {
 
     private constructor() {
     }
-   /* async getByIdUser(userId: string): Promise<UserDocument| null> {
-        return UserModel.findById(userId).exec();
 
-    }*/
+    private async checkBlobExist(userId: string){
+        let ok = 0
+        for await (const blob of container.listBlobsFlat()){
+            if (blob.name.includes(userId)){
+                ok = 1
+                blockBlobExist = blob.name
+            }
+        }
+        return ok
+    }
+
+    private async streamToString(readableStream: any) : Promise<string>{
+        return new Promise((resolve, reject) => {
+            const chunks: any[] = [];
+            readableStream.on("data", (data: any) => {
+                chunks.push(data.toString());
+            });
+            readableStream.on("end", () => {
+                resolve(chunks.join(""));
+            });
+            readableStream.on("error", reject);
+        });
+    }
+
+    async addProfilePicture(userId: string, file: string) {
+
+        if (await this.checkBlobExist(userId + enfFileContainer)){
+            const blockBlobClient = container.getBlockBlobClient(blockBlobExist);
+            await blockBlobClient.delete()
+            const upload = await container.getBlockBlobClient(userId + enfFileContainer).upload(file, file.length)
+            if (!upload){
+                return null;
+            }
+            return true
+        }
+
+        const upload = await container.getBlockBlobClient(userId + enfFileContainer).upload(file, file.length)
+
+
+    }
+
+    async getProfilePicture(userId: string) {
+
+        if (!await this.checkBlobExist(userId + enfFileContainer)){
+            return null;
+        }
+        const blockBlobClient = container.getBlockBlobClient(blockBlobExist);
+        const downloadBlockBlobResponse = await blockBlobClient.download(0);
+        return this.streamToString(downloadBlockBlobResponse.readableStreamBody);
+
+    }
+
     async getByIdUser(userId: string): Promise<UserDocument | null> {
         return UserModel.findById(userId).exec();
     }
