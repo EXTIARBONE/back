@@ -1,7 +1,6 @@
 import express, {Request, Response, Router} from "express";
 import {UserService} from "../services/user.service";
 import {checkUserConnected} from "../middlewares";
-import exp from "constants";
 
 export class UserController {
 
@@ -90,6 +89,25 @@ export class UserController {
         }
     }
 
+    async getCarboneScoreFromUser(req: Request, res:Response){
+        try{
+            if (!req.params.user_id){
+                res.status(400).json({error: "La requête envoyée n'est pas valide"})
+                return;
+            }
+            const user = await UserService.getInstance().getByIdUser(req.params.user_id);
+            if (!user) {
+                res.status(404).end();
+                return;
+            }
+            res.json(user.carbonScore);
+        }
+        catch (err) {
+            res.status(500).end();
+            return;
+        }
+    }
+
     async getProfilPics(req: Request, res:Response){
         try{
             if (!req.params.id){
@@ -141,6 +159,7 @@ export class UserController {
 
         router.get('/:user_id', checkUserConnected(""), this.getUser.bind(this));
         router.get('/getScore/:user_id', checkUserConnected(""), this.getScoreFromUser.bind(this));
+        router.get('/getCarboneScore/:user_id', checkUserConnected(""), this.getCarboneScoreFromUser.bind(this));
         router.get('/profilPics', checkUserConnected(""), this.getProfilPics.bind(this));
 
         router.put('/:id', express.json(), checkUserConnected(""), this.updateUser.bind(this));
