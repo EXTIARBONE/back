@@ -25,7 +25,7 @@ export const monthlyTask = (): void => {
             }
         }
         catch (e){
-
+            console.error(e)
         }
 
     });

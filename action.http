@@ -1,9 +1,9 @@
 ### GET all actions
-GET http://localhost:3001/actions
+GET http://localhost:3001/action
 Authorization: Bearer {{token}}
 
 ### POST add actions available
-POST http://localhost:3001/actions/addActionsAvailable
+POST http://localhost:3001/action/addActionsAvailable
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 
 ### POST add one action to be available
-POST http://localhost:3001/actions/addActionsAvailable
+POST http://localhost:3001/action/addActionsAvailable
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ### POST add one action
-POST http://localhost:3001/actions/addAction
+POST http://localhost:3001/action/addAction
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

@@ -1,13 +1,18 @@
 import {config} from "dotenv";
 import express from "express";
-import {ActionController, AuthController, CarbonCalcApiController, CoffeeController, RankingController} from "./controllers";
-import mongoose, {Mongoose} from "mongoose";
+import {
+    ActionController,
+    AuthController,
+    CarbonCalcApiController,
+    HistoricController,
+    NfcController,
+    RankingController,
+    RewardController,
+    UserController
+} from "./controllers";
+import mongoose from "mongoose";
 import cors from "cors"
-import {HistoricController} from "./controllers";
-import {RewardController} from "./controllers";
-import {NfcController} from "./controllers";
-import {monthlyTask} from "./monthlyTask/resetC02ScoreMonthly";
-import {UserController} from "./controllers";
+
 config();
 
 async function startServer(): Promise<void> {
@@ -23,8 +28,6 @@ async function startServer(): Promise<void> {
 
     const app = express();
     app.use(cors())
-    const coffeeController = new CoffeeController();
-    app.use('/coffee', coffeeController.buildRoutes()); // enregistrement d'un routeur
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes());
     const rankingController = new RankingController();

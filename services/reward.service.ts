@@ -1,6 +1,5 @@
 import {rewardModel} from "../models/rewardUser.model";
 import {RewardAvailableProps, rewardAvaiModel} from "../models/rewardAviable.model";
-import {UserModel} from "../models";
 
 export class RewardService{
 

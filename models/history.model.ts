@@ -1,6 +1,5 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
-import {SessionProps} from "./session.model";
-import {ActionModel, ActionProps, actionSchema} from "./action.model";
+import {ActionProps, actionSchema} from "./action.model";
 
 export const historySchema = new Schema({
     userId:  {

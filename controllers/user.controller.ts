@@ -1,7 +1,6 @@
 import express, {Request, Response, Router} from "express";
 import {UserService} from "../services/user.service";
 import {checkUserConnected} from "../middlewares";
-import exp from "constants";
 
 export class UserController {
 
@@ -50,7 +49,7 @@ export class UserController {
     async updateUser(req: Request, res:Response){
 
         try{
-            if (!req.params.user_id){
+            if (!req.params.id){
                 res.status(400).json({error: "La requête envoyée n'est pas valide"})
                 return;
             }
@@ -58,7 +57,7 @@ export class UserController {
                 res.status(400).json({error: "La requête envoyée n'est pas valide"})
                 return;
             }
-            const user = await UserService.getInstance().updateUser(req.params.user_id, req.body);
+            const user = await UserService.getInstance().updateUser(req.params.id, req.body);
             if (!user) {
                 res.status(404).json({error: "L'utilisateur n'existe pas"})
                 return;
@@ -83,6 +82,25 @@ export class UserController {
                 return;
             }
             res.json(user.score);
+        }
+        catch (err) {
+            res.status(500).end();
+            return;
+        }
+    }
+
+    async getCarboneScoreFromUser(req: Request, res:Response){
+        try{
+            if (!req.params.user_id){
+                res.status(400).json({error: "La requête envoyée n'est pas valide"})
+                return;
+            }
+            const user = await UserService.getInstance().getByIdUser(req.params.user_id);
+            if (!user) {
+                res.status(404).end();
+                return;
+            }
+            res.json(user.carbonScore);
         }
         catch (err) {
             res.status(500).end();
@@ -141,9 +159,10 @@ export class UserController {
 
         router.get('/:user_id', checkUserConnected(""), this.getUser.bind(this));
         router.get('/getScore/:user_id', checkUserConnected(""), this.getScoreFromUser.bind(this));
+        router.get('/getCarboneScore/:user_id', checkUserConnected(""), this.getCarboneScoreFromUser.bind(this));
         router.get('/profilPics', checkUserConnected(""), this.getProfilPics.bind(this));
 
-        router.put('/:user_id', express.json(), checkUserConnected(""), this.updateUser.bind(this));
+        router.put('/:id', express.json(), checkUserConnected(""), this.updateUser.bind(this));
         router.put('/nfc/:id', express.json(), this.updateUserByNfc.bind(this))
 
         return router;

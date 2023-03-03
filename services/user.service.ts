@@ -1,7 +1,9 @@
 import {config} from "dotenv";
-config()
 import {UserDocument, UserModel, UserProps} from "../models";
 import {BlobServiceClient} from "@azure/storage-blob";
+import {SecurityUtils} from "../utils";
+
+config()
 
 const blobService = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING as string)
 const container = blobService.getContainerClient('profil-pics')
@@ -110,7 +112,7 @@ export class UserService {
             user.surname = userProps.surname;
         }
         if (userProps.password !== undefined) {
-            user.password = userProps.password;
+            user.password = SecurityUtils.sha512(userProps.password);
         }
         if (userProps.carbonScore !== undefined) {
             user.carbonScore = userProps.carbonScore;
