@@ -1,12 +1,7 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
 import {SessionProps} from "./session.model";
-import {HistoryModel, HistoryProps} from "./history.model";
-import {
-    ScoreCaboneHistoricDocument,
-    scoreCarboneHistoricProps, scoreCarboneHistoricSchema,
-    scoreCarboneHistoricSchemaModel
-} from "./historicCarbonScore";
-import {historySchema} from "./history.model";
+import {HistoryProps, historySchema} from "./history.model";
+import {scoreCarboneHistoricProps, scoreCarboneHistoricSchema} from "./historicCarbonScore";
 
 export const possibleRole:{[status:string]:string;}={
     "USER":'USER',

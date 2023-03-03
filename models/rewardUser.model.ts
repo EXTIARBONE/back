@@ -1,5 +1,4 @@
 import mongoose, {Document, Model, Schema} from "mongoose";
-import {SessionProps} from "./session.model";
 
 const rewardSchema = new Schema({
     userId: {

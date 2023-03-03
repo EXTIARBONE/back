@@ -1,6 +1,5 @@
 import {BilanCarboneService, vehicleAction} from "../services/bilanCarbone.service";
 import {UserService} from "../services/user.service";
-import {frontVehiculeType} from "../controllers";
 
 export class BilanCarboneFacade {
     private static instance?: BilanCarboneFacade;
@@ -19,11 +18,8 @@ export class BilanCarboneFacade {
         let bilanCarboneObj = await BilanCarboneService.getInstance().personnalVehicleQuery(vehicle);
         if (bilanCarboneObj){
             let strSplitted = bilanCarboneObj.carbon.split(" ")
-            console.log("nono")
-            console.log(strSplitted[0].toString())
-            console.log(strSplitted[0])
             let co2 : number = strSplitted[0]
-            UserService.getInstance().updateCarboneScore(userId, co2);
+            await UserService.getInstance().updateCarboneScore(userId, co2);
             return bilanCarboneObj;
         } else {
             console.log("error in getVehicleCarbonScore")
@@ -36,7 +32,7 @@ export class BilanCarboneFacade {
             const match: RegExpMatchArray | null = scoreStr.match(/([\d.]+)\s*kg/);
             if (match) {
                 const score: number = parseFloat(match[1]);
-                UserService.getInstance().updateCarboneScore(userId, score);
+                await UserService.getInstance().updateCarboneScore(userId, score);
                 return score;
             }
         }

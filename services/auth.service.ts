@@ -1,5 +1,5 @@
 import {possibleRole, UserDocument, UserModel, UserProps} from "../models";
-import {AuthUtils, SecurityUtils} from "../utils";
+import {SecurityUtils} from "../utils";
 import {SessionDocument, SessionModel} from "../models/session.model";
 
 export class AuthService {
@@ -17,12 +17,10 @@ export class AuthService {
     }
 
     public async subscribeUser(user: UserProps): Promise<UserDocument> {
-        console.log(user)
         if (!user.password) {
             throw new Error('Missing password');
         }
         let roleName = possibleRole["USER"];
-        console.log(roleName);
         const model = new UserModel({
             mail: user.mail,
             name: user.name,

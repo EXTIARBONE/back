@@ -1,5 +1,4 @@
 import express, {Request, Response, Router} from "express";
-import {CoffeeService} from "../services";
 import {checkUserConnected} from "../middlewares";
 import {BilanCarboneFacade} from "../facade/bilanCarboneFacade";
 import {AuthUtils} from "../utils";
@@ -45,7 +44,6 @@ export class CarbonCalcApiController {
                         distance: req.body.distance,
                         vehicle: req.body.vehicle
                     })
-                    console.log("error")
                 }
                 res.json({score:score})
             }

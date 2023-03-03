@@ -1,8 +1,9 @@
 import {config} from "dotenv";
-config()
 import {UserDocument, UserModel, UserProps} from "../models";
 import {BlobServiceClient} from "@azure/storage-blob";
 import {SecurityUtils} from "../utils";
+
+config()
 
 const blobService = BlobServiceClient.fromConnectionString(process.env.AZURE_STORAGE_CONNECTION_STRING as string)
 const container = blobService.getContainerClient('profil-pics')

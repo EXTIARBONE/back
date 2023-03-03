@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import {frontVehiculeType} from "../controllers/carbonCalcApiController";
+import axios from 'axios';
+
 export interface vehicleAction{
     distance: number,
     vehicle: string
