@@ -26,8 +26,6 @@ export class UserController {
         }catch (e) {
             res.status(500).json({error: e})
         }
-
-
     }
 
     async getUser(req: Request, res:Response){
@@ -65,7 +63,7 @@ export class UserController {
                 res.status(404).json({error: "L'utilisateur n'existe pas"})
                 return;
             }
-            res.json(user);
+            res.json({message: "L'utilisateur a bien été mis à jour"});
         }
         catch (err) {
             res.status(500).end();
@@ -75,17 +73,21 @@ export class UserController {
 
     async getScoreFromUser(req: Request, res:Response){
         try{
+            if (!req.params.user_id){
+                res.status(400).json({error: "La requête envoyée n'est pas valide"})
+                return;
+            }
             const user = await UserService.getInstance().getByIdUser(req.params.user_id);
-            console.log("coucou", user)
-            if (user === null) {
+            if (!user) {
                 res.status(404).end();
                 return;
             }
             res.json(user.score);
         }
         catch (err) {
-            res.status(400).end();
-            return;}
+            res.status(500).end();
+            return;
+        }
     }
 
     async getProfilPics(req: Request, res:Response){

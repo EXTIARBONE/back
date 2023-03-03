@@ -45,6 +45,7 @@ export class CarbonCalcApiController {
                         distance: req.body.distance,
                         vehicle: req.body.vehicle
                     })
+                    console.log("error")
                 }
                 res.json({score:score})
             }
@@ -58,7 +59,7 @@ export class CarbonCalcApiController {
         const router = express.Router();
         //router.use();
         router.use(checkUserConnected(""));
-        router.get('/', express.json(), this.carbonCalculator.bind(this));
+        router.post('/', express.json(), this.carbonCalculator.bind(this));
         return router;
     }
 }

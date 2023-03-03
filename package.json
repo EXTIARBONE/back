@@ -26,6 +26,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "@azure/storage-blob": "^12.13.0",
+    "email-validator": "^2.0.4",
     "mongoose": "^7.0.0",
     "node-schedule": "^2.1.1"
   },

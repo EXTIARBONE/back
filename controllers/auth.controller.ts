@@ -2,7 +2,7 @@ import express, {Request, Response, Router} from "express";
 import {AuthService} from "../services";
 import {checkUserConnected} from "../middlewares";
 import {UserService} from "../services/user.service";
-
+import * as EmailValidator from "email-validator";
 
 export class AuthController {
 
@@ -12,7 +12,13 @@ export class AuthController {
                 res.status(400).json({error: "Bad request"})
                 return
             }
-            console.log(req.body)
+            if (req.body.mail){
+                let email = req.body.mail as string;
+                if (!EmailValidator.validate(email)){
+                    res.status(400).json({error: "L'email donnée n'est pas valide"})
+                    return
+                }
+            }
             const user = await AuthService.getInstance().subscribeUser(req.body);
             if (!user){
                 res.status(501).json({error: "Impossible de créer l'utilisateur"})

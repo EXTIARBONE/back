@@ -16,7 +16,6 @@ export class BilanCarboneFacade {
     }
 
     public async getVehicleCarbonScore(userId: string, vehicle: vehicleAction) {
-        console.log(vehicle.vehicle in frontVehiculeType)
         let bilanCarboneObj = await BilanCarboneService.getInstance().personnalVehicleQuery(vehicle);
         if (bilanCarboneObj){
             let strSplitted = bilanCarboneObj.carbon.split(" ")
@@ -32,14 +31,11 @@ export class BilanCarboneFacade {
     }
 
     public async getPublicTransportCarbonScore(userId: string, vehicle: vehicleAction){
-        console.log("coucoucoucou")
         let scoreStr = await BilanCarboneService.getInstance().publicTransportQuery(vehicle);
         if (scoreStr){
             const match: RegExpMatchArray | null = scoreStr.match(/([\d.]+)\s*kg/);
             if (match) {
                 const score: number = parseFloat(match[1]);
-                console.log("coucoucoucoucoucoucou")
-                console.log(score);
                 UserService.getInstance().updateCarboneScore(userId, score);
                 return score;
             }
